@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GinRaiDee — คู่มืออาหารสุขภาพ</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Mitr:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">
+      <div class="logo-icon">🥗</div>
+      <span>GinRaiDee</span>
+      <span style="font-size:0.72rem;font-weight:300;color:var(--gray);margin-left:0.2rem">คู่มืออาหารสุขภาพ</span>
+    </div>
+    <div class="nav-actions">
+      <label class="theme-switch" for="theme-toggle">
+        <input type="checkbox" id="theme-toggle">
+        <span class="slider">
+          <span class="slider-icon sun">☀️</span>
+          <span class="slider-icon moon">🌙</span>
+        </span>
+      </label>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero-banner">
+    <div class="hero-title">กินอะไรดี?</div>
+    <p class="hero-sub">ค้นหาข้อมูลโภชนาการกับโรคและอาหารของคุณที่นี่<br>เพื่อสุขภาพที่ดีขึ้นในทุก ๆ วัน</p>
+  </div>
+
+  <!-- MAIN SEARCH CARD -->
+  <div class="search-section">
+    <div class="search-card fade-up">
+      <div class="search-card-header">
+        <span>🔍</span>
+        <h2>ค้นหาอาหารที่เหมาะกับคุณ</h2>
+        <span class="hint">เลือกอาการ หรือโรคประจำตัว</span>
+      </div>
+      <div class="search-body">
+
+        <!-- LEFT: Symptoms -->
+        <div>
+          <div class="col-title-row">
+            <div class="col-title">🤒 มีอาการ...</div>
+            <button class="clear-btn" onclick="clearSymptoms()" title="ล้างการเลือกทั้งหมด">✕ ล้าง</button>
+          </div>
+          <div class="symptom-grid">
+            <button class="symptom-btn" data-sym="ปวดหัว" onclick="toggleSymptom(this)">
+              <span class="s-icon">🤕</span><span>ปวดหัว</span>
+            </button>
+            <button class="symptom-btn" data-sym="ลำไส้แปรปรวน" onclick="toggleSymptom(this)">
+              <span class="s-icon">🤢</span><span>ลำไส้แปรปรวน</span>
+            </button>
+            <button class="symptom-btn" data-sym="ปวดท้อง" onclick="toggleSymptom(this)">
+              <span class="s-icon">😣</span><span>ปวดท้อง</span>
+            </button>
+            <button class="symptom-btn" data-sym="กินได้น้อย" onclick="toggleSymptom(this)">
+              <span class="s-icon">😔</span><span>กินได้น้อย</span>
+            </button>
+            <button class="symptom-btn" data-sym="อ่อนเพลีย" onclick="toggleSymptom(this)">
+              <span class="s-icon">😴</span><span>อ่อนเพลีย</span>
+            </button>
+            <button class="symptom-btn" data-sym="มีอื่น ๆ" onclick="toggleSymptom(this)">
+              <span class="s-icon">❓</span><span>มีอื่น ๆ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- OR -->
+        <div class="or-divider">
+          <div class="or-line"></div>
+          <div class="or-text">หรือ</div>
+          <div class="or-line"></div>
+        </div>
+
+        <!-- RIGHT: Disease -->
+        <div class="disease-col">
+          <div class="col-title-row">
+            <div class="col-title">🏥 มีโรคประจำตัว...</div>
+            <button class="clear-btn" onclick="clearDiseases()" title="ล้างการเลือกทั้งหมด">✕ ล้าง</button>
+          </div>
+
+          <div class="disease-tags" id="disease-tags">
+            <div class="d-tag" onclick="toggleDiseaseTag(this)" data-d="เบาหวาน">เบาหวาน</div>
+            <div class="d-tag" onclick="toggleDiseaseTag(this)" data-d="ความดันโลหิตสูง">ความดันโลหิตสูง</div>
+            <div class="d-tag" onclick="toggleDiseaseTag(this)" data-d="ไขมันสูง">ไขมันสูง</div>
+            <div class="d-tag" onclick="toggleDiseaseTag(this)" data-d="โรคไต">โรคไต</div>
+            <div class="d-tag" onclick="toggleDiseaseTag(this)" data-d="โรคหัวใจ">โรคหัวใจ</div>
+            <div class="d-tag" onclick="toggleDiseaseTag(this)" data-d="ภูมิแพ้กลูเตน">ภูมิแพ้กลูเตน</div>
+            <div class="d-tag" onclick="toggleDiseaseTag(this)" data-d="แพ้นม">แพ้นม / แลคโตส</div>
+            <div class="d-tag" onclick="toggleDiseaseTag(this)" data-d="ไม่มีโรค">ไม่มีโรคประจำตัว</div>
+          </div>
+
+          <button class="search-btn" onclick="doSearch()">
+            🔍 เริ่มค้นหาอาหาร
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT PANEL -->
+  <div id="result-panel" style="max-width:1000px;margin:0 auto 1rem;padding:0 1.5rem;">
+    <div id="result-inner"
+      style="background:linear-gradient(135deg,#fff8e8,#fff3d8);border:1.5px solid #f5c97a;border-radius:14px;padding:1.2rem 1.5rem;">
+    </div>
+  </div>
+
+  <!-- DAILY MENU -->
+  <div class="daily-section fade-up" id="daily">
+    <div class="section-header">
+      <span style="font-size:1.5rem">🍽️</span>
+      <h2>เมนูแนะนำประจำวัน</h2>
+      <div class="date-badge" id="today-date">วันนี้</div>
+    </div>
+
+    <div class="tip-strip">
+      <span class="tip-icon">💡</span>
+      <span><strong>เคล็ดลับ:</strong> ควรรับประทานอาหารครบ 5 หมู่ กินผักผลไม้ให้หลากสี และดื่มน้ำอย่างน้อย 8
+        แก้วต่อวัน</span>
+    </div>
+
+    <div class="meal-tabs" id="meal-tabs">
+      <span class="tab-slider" id="tab-slider"></span>
+      <button class="meal-tab active" onclick="switchMeal('morning',this)">🌅 เช้า</button>
+      <button class="meal-tab" onclick="switchMeal('noon',this)">☀️ กลางวัน</button>
+      <button class="meal-tab" onclick="switchMeal('evening',this)">🌙 เย็น</button>
+      <button class="meal-tab" onclick="switchMeal('snack',this)">🍎 ของว่าง</button>
+    </div>
+
+    <div class="food-grid" id="food-grid"></div>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+
+</html>
