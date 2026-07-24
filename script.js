@@ -565,10 +565,18 @@ function setDonutSegment(id, percent, offset) {
 }
 
 // Initial calculation on load
-window.addEventListener('DOMContentLoaded', () => {
+function initCalculators() {
   calculateAll();
   updateCalorieProgress();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initCalculators);
+} else {
+  initCalculators();
+}
+window.addEventListener('load', initCalculators);
+
 
 // Scroll observer
 const obs = new IntersectionObserver(entries => {
