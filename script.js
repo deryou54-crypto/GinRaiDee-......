@@ -606,5 +606,97 @@ themeToggle.addEventListener('change', () => {
   }
 });
 
+// ── USER LOGIN LOGIC ──
+let currentUser = null;
+
+function loadStoredUser() {
+  try {
+    const saved = localStorage.getItem('ginraidee_user');
+    if (saved) {
+      currentUser = JSON.parse(saved);
+    }
+  } catch (e) {
+    console.error('Failed to parse user session:', e);
+  }
+  updateUserNav();
+}
+
+function updateUserNav() {
+  const container = document.getElementById('user-status-container');
+  if (!container) return;
+
+  if (currentUser && currentUser.firstName && currentUser.lastName) {
+    container.innerHTML = `
+      <div class="user-profile">
+        <span class="avatar-icon">👤</span>
+        <span class="user-name" id="display-user-name" title="${currentUser.firstName} ${currentUser.lastName}">${currentUser.firstName} ${currentUser.lastName}</span>
+        <button class="nav-btn logout-btn" onclick="handleLogout()" title="ออกจากระบบ">ออกจากระบบ</button>
+      </div>
+    `;
+  } else {
+    container.innerHTML = `
+      <button class="nav-btn login-btn" onclick="openLoginModal()">🔑 เข้าสู่ระบบ</button>
+    `;
+  }
+}
+
+function openLoginModal() {
+  const modal = document.getElementById('login-modal');
+  if (modal) {
+    modal.classList.add('active');
+    const fnInput = document.getElementById('first-name');
+    if (fnInput) fnInput.focus();
+  }
+}
+
+function closeLoginModal() {
+  const modal = document.getElementById('login-modal');
+  if (modal) {
+    modal.classList.remove('active');
+  }
+}
+
+function handleLogin(e) {
+  if (e) e.preventDefault();
+  const firstNameInput = document.getElementById('first-name');
+  const lastNameInput = document.getElementById('last-name');
+
+  if (!firstNameInput || !lastNameInput) return;
+
+  const fn = firstNameInput.value.trim();
+  const ln = lastNameInput.value.trim();
+
+  if (!fn || !ln) return;
+
+  currentUser = { firstName: fn, lastName: ln };
+  localStorage.setItem('ginraidee_user', JSON.stringify(currentUser));
+
+  closeLoginModal();
+  updateUserNav();
+
+  // Reset form inputs
+  firstNameInput.value = '';
+  lastNameInput.value = '';
+}
+
+function handleLogout() {
+  currentUser = null;
+  localStorage.removeItem('ginraidee_user');
+  updateUserNav();
+}
+
+// Close modal when clicking outside content box
+window.addEventListener('click', (e) => {
+  const modal = document.getElementById('login-modal');
+  if (modal && e.target === modal) {
+    closeLoginModal();
+  }
+});
+
+// Run initial user nav check
+loadStoredUser();
+
+
+
 
 

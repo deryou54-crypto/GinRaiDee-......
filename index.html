@@ -21,6 +21,7 @@
       <span style="font-size:0.72rem;font-weight:300;color:var(--gray);margin-left:0.2rem">คู่มืออาหารสุขภาพ</span>
     </div>
     <div class="nav-actions">
+      <div id="user-status-container" class="user-status-container"></div>
       <label class="theme-switch" for="theme-toggle">
         <input type="checkbox" id="theme-toggle">
         <span class="slider">
@@ -432,7 +433,28 @@
     <div class="food-grid" id="food-grid"></div>
   </div>
 
+  <!-- LOGIN MODAL -->
+  <div class="modal-overlay" id="login-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>🔑 เข้าสู่ระบบ</h3>
+        <button class="close-modal-btn" onclick="closeLoginModal()">✕</button>
+      </div>
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="first-name">ชื่อ (First Name)</label>
+          <input type="text" id="first-name" placeholder="ระบุชื่อของคุณ" required>
+        </div>
+        <div class="form-group">
+          <label for="last-name">นามสกุล (Last Name)</label>
+          <input type="text" id="last-name" placeholder="ระบุนามสกุลของคุณ" required>
+        </div>
+        <button type="submit" class="submit-login-btn">เข้าสู่ระบบ</button>
+      </form>
+    </div>
+  </div>
+
   <script src="script.js" defer></script>
 </body>
 
-</html>
+</html>
